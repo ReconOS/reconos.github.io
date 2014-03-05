@@ -1,0 +1,25 @@
+/:
+  - [/about, About ReconOS, /about/objectives]
+  - [/gettingstarted, Getting Started, /gettingstarted/tutorial]
+  - [/documentation, Documentation, /documentation/userguide]
+  - [/getinvolved, Get Involved, /getinvolved/howto]
+  - [/publications, Publications]
+
+/about:
+  - [/about/objectives, Objectives]
+  - [/about/history, History]
+  - [/about/stories, Success Stories]
+
+/gettingstarted:
+  - [/gettingstarted/tutorial, Tutorial]
+  - [/gettingstarted/starterkit, Demo Builds]
+  - [/gettingstarted/samplecode, Sample Code]
+  - [/gettingstarted/github, Github Repository, "https://github.com/EPiCS/reconos", y]
+
+/documentation:
+  - [/documentation/userguide, User Guide]
+  - [/documentation/api, API Documentation]
+  
+/getinvolved:
+  - [/getinvolved/howto, How to get Involved]
+  - [/getinvolved/mailinglist, Mailinglist, "http://pc-techinf-29.cs.upb.de", y]

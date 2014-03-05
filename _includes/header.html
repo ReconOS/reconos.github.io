@@ -1,0 +1,53 @@
+<div id="header">
+  <div id="logo"><a href="{{ site.url }}"><img src="{{ site.url }}/assets/images/logo.svg" alt="ReconOS Logo" /></a></div>
+  <div id="navi">
+    {% assign url = page.url | split:'/' %}
+
+    <ul>
+    {% for ep in site.data.sitemap["/"] %}
+      {% assign epurl = ep[0] | split:'/' %}
+      {% assign ll = ep | size %}
+      {% if ll == 2 %}
+        <li {% if url[1] == epurl[1] %}class="active"{% endif %}><a href="{{ site.url }}{{ep[0]}}">{{ ep[1] }}</a></li>
+      {% else %}
+        {% if ep[3] %}
+          <li><a href="{{ep[2]}}" target="_blank">{{ ep[1] }}</a></li>
+        {% else %}
+          <li {% if url[1] == epurl[1] %}class="active"{% endif %}><a href="{{ site.url }}{{ep[2]}}">{{ ep[1] }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </ul>
+
+    {% for l in (1..1) %}
+      {% for e in site.data.sitemap %}
+        {% assign lurl = e[0] | split:'/' %}
+        {% assign match = true %}
+        {% for i in (0..l) %}
+          {% if url[i] != lurl[i] %}
+            {% assign match = false %}
+          {% endif %}
+        {% endfor %}
+        {% if match == true %}
+          <ul>
+          {% for ep in e[1] %}
+            {% assign epurl = ep[0] | split:'/' %}
+            {% assign ln = l | plus:1 %}
+            {% assign ll = ep | size %}
+            {% if ll == 2 %}
+              <li {% if url[ln] == epurl[ln] %}class="active"{% endif %}><a href="{{ site.url }}{{ep[0]}}">{{ ep[1] }}</a></li>
+            {% else %}
+              {% if ep[3] %}
+                <li><a href="{{ep[2]}}" target="_blank">{{ ep[1] }}</a></li>
+              {% else %}
+                <li {% if url[ln] == epurl[ln] %}class="active"{% endif %}><a href="{{ site.url }}{{ep[2]}}">{{ ep[1] }}</a></li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          </ul>
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>

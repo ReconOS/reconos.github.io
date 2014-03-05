@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+
+#content ul {
+	width:920px;
+	margin:auto;
+	margin-top:25px;
+	margin-bottom:0px;
+	padding:0px;
+	display:block;
+	clear:both;
+	overflow:hidden;
+}
+
+#content li {
+	list-style:none;
+	display:block;
+	float:left;
+
+	width:276px;
+	margin:10px;
+	
+	text-align:center;
+}
+
+#content li h1 {
+	font-size:16px;
+}
+
+#content li h2 {
+	font-family:"Roboto Condensed";
+	font-weight:300;
+}
+
+@media only screen and (max-width:481px) {
+#content ul {
+	width:390px;
+}
+
+#content li {
+	width:390px;
+	margin-left:0px;
+	margin-right:0px;
+}
+}
+

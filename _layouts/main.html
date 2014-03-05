@@ -1,0 +1,42 @@
+{% include pre.html %}
+
+<script src="{{ site.url }}/assets/js/slider.js" type="text/javascript"></script>
+
+<link href="{{ site.url }}/assets/css/main.css" rel="stylesheet" type="text/css" />
+<link href="{{ site.url }}/assets/css/slider.css" rel="stylesheet" type="text/css" />
+<link href="{{ site.url }}/assets/css/bullet.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<div id="frame">
+  {% include header.html %}
+
+  <div id="slider">
+    <div id="slider-background"></div>
+    <div id="slider-content">
+      <ul>
+      {% for p in page.slider %}
+        <li>
+          <img src="{{ site.url }}/assets/images/{{ p[0] }}" alt="" />
+          <div class="caption">
+            <h1>{{ p[1] }}</h1>
+            {% assign l = p | size %}
+            {% if l == 3 %}
+            <h2>{{ p[2] }}</h2>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+    {{ content }}
+  </div>
+
+  {% include footer.html %}  
+</div>
+</body>
+</html>
