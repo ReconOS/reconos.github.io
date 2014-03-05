@@ -3,13 +3,11 @@ title: ReconOS developer forum
 layout: page
 ---
 
-Just a test
-
 <iframe id="forum_embed"
  src="javascript:void(0)"
  scrolling="no"
  frameborder="0"
- width="900"
+ width="1000"
  height="700">
 </iframe>
 
