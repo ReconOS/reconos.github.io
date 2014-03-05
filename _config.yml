@@ -1,8 +1,6 @@
 name: "ReconOS"
 description: "Operating System for Reconfigurable Computing"
 
-url: http://reconos.de
-
 pygments: true
 markdown: redcarpet
 redcarpet:
