@@ -7,8 +7,8 @@ layout: page
  src="javascript:void(0)"
  scrolling="no"
  frameborder="0"
- width="1000"
- height="700">
+ width="100%"
+ height="600">
 </iframe>
 
 <script type="text/javascript">
