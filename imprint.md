@@ -12,11 +12,11 @@ of the State of North Rhine-Westphalia. The University is
 legally represented by its President, Prof. Dr. Nikolaus Risch,
 who carries the overall responsibility for this website:
 
-*President of the University of Paderborn*
-Prof. Dr. Nikolaus Risch
-University of Paderborn
-Warburger Str. 100
-33098 Paderborn, Germany
+*President of the University of Paderborn*  
+Prof. Dr. Nikolaus Risch  
+University of Paderborn  
+Warburger Str. 100  
+33098 Paderborn, Germany  
 Phone: +49-5251-600 (central switchboard)
 
 University of Paderborn's VAT No: DE 811209907
@@ -29,7 +29,7 @@ Völklinger Str. 49, 40221 Düsseldorf, Germany.
 
 The responsible editor with respect to the German State Treaty on
 Broadcasting Services and Telecommunication Media (§55 RStV)
-is Prof. Dr. Marco Platzner, email: platzner@upb.de
+is Prof. Dr. Marco Platzner, email: [platzner@upb.de](mailto:platzner@upb.de)
 
 ## Disclaimer
 
@@ -72,5 +72,5 @@ for the purposes set out above.
 You can contradict the collection and use of your IP address with Google
 Analytics at any time with effect for the future. For more information,
 see http://tools.google.com/dlpage/gaoptout. We point out that on this site
-Google Analytics has been extended with the code "gat._anonymizeIp();" to
+Google Analytics has been extended with the code `gat._anonymizeIp();` to
 provide an anonymous collection of IP addresses.
