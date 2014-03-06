@@ -29,7 +29,7 @@ Völklinger Str. 49, 40221 Düsseldorf, Germany.
 
 The responsible editor with respect to the German State Treaty on
 Broadcasting Services and Telecommunication Media (§55 RStV)
-is Prof. Dr. Marco Platzner, email: [platzner@upb.de](mailto:platzner@upb.de)
+is Prof. Dr. Marco Platzner, email: <platzner@uni-paderborn.de>
 
 ## Disclaimer
 
