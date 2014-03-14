@@ -4,7 +4,7 @@ layout: page
 ---
 # User Guide
 
-GThis guide should give you an introduction into the development of
+This guide should give you an introduction into the development of
 applications with ReconOS. You will understand how to implement your
 hardware and software threads and how to synchronize them by using
 the mechanisms provided by ReconOS.
