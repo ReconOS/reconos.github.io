@@ -76,7 +76,7 @@ description of ReconOS.
 Additionally to theses mandatory ports you can also add you own ones to connect the
 hardware thread to other resources.
 
-```
+```vhdl
 entity hwt_simple_adder is
 	port (
 		-- OSIF FIFO ports
