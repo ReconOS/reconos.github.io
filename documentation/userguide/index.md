@@ -280,7 +280,7 @@ case state is
 	when STATE_GET_SECOND =>
 		osif_mbox_get(i_osif, o_osif, MBOX_RECV, v2, done);
 		if done then
-			state <= STATE_GET_SECOND;
+			state <= STATE_CALC;
 		end if;
 
 	when STATE_CALC =>
