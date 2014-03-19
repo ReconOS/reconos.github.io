@@ -4,9 +4,26 @@ layout: page
 ---
 # Step By Step Guide for the Zynq
 To get started using ReconOS, this guide leads you through the
-first steps to setup your development environment using the
-sort demo as the example application. This guide includes
-detailed step by step instructions.
+first steps to setup your development environment. You will build
+the sort demo and execute it on your board by following the
+step by step instructions given. This guide includes the following
+steps:
+
+* Setup of the ReconOS Toolchain
+
+* Setup of Linux
+  * U-Boot
+  * Linux Kernel
+  * Root Filesystem
+
+* Setup of ReconOS
+  * Linux Module
+  * C Library
+
+* Build of the Demo
+  * Hardware Project
+  * Software Project
+  * Running the Demo
 
 ## Prerequisites
 
@@ -31,7 +48,8 @@ installation of the appropriate tools and your development board.
   * UART connection to interact with the board
 
 Furthermore, we need to download some external components. To make
-sure that everything works fine, you can use the following releases:
+sure that you can follow the steps without any problem, you can use
+the following releases:
 
 * Linux Kernel: [http://github.com/Xilinx/linux-xlnx](http://github.com/Xilinx/linux-xlnx)  
   tag: `xilinx-v14.7`
@@ -50,11 +68,9 @@ data. The different threads synchronizes via mboxes and access the data
 via the memory subsystem of ReconOS.
 
 ## Setup ReconOS
-As a first step you should inform you about the general ideas behind
-ReconOS and its architecture.
-
 At first you should think about a directory structure you want to use.
-As starting point you can use the following one used in this guide:
+As a starting point you can use the following one, we will assume in the
+later steps:
 
 ```
 $HOME/reconos = $WD
@@ -67,15 +83,16 @@ $HOME/reconos = $WD
 
 ### Setup the ReconOS toolchain
 
-At first we need to checkout the ReconOS repository:
+At first you need to checkout the ReconOS repository:
 
 ```
 > cd $WD
 > git clone https://github.com/EPiCS/reconos.git
 ```
 
-To use the ReconOS toolchain you must configure it to your needs. Therefore,
-open `$WD/reconos/tools/environment/zynq_linux.sh` and adjust it to your machine:
+To use the ReconOS toolchain you must configure it by changing its configuration
+file. Therefore, open `$WD/reconos/tools/environment/zynq_linux.sh` and adjust
+it to your actual environment:
 
 |                |                                                                                                                                             |
 |----------------|---------------------------------------------------------------------------------------------------------------------------------------------|
@@ -87,14 +104,14 @@ open `$WD/reconos/tools/environment/zynq_linux.sh` and adjust it to your machine
 | `KDIR`         | enter the path to the linux kernel<br />in this case: $HOME/reconos/linux-xlnx                                                              |
 | `PATH`         | enter directories you want to include to the `PATH` variable<br />in this case: `$HOME/reconos/u-boot-xlnx/tools:$PATH`                     |
 
-After setting up you can simply source the main setup script by
+After doing the configuration, you can simply source the main setup script by
 
 ```
 > source $WD/reconos/tools/environment/setup_reconos_toolchain.sh zynq_linux
 ```
 
-If you do not specify a configuration the default configuration
-tools/environment/default.sh is used which should be a link to the
+If you do not specify a configuration, the default configuration
+tools/environment/default.sh is used, which should be a link to the
 linux_zynq.sh configuration file. To change this, perform the following steps:
 
 ```
@@ -102,15 +119,20 @@ linux_zynq.sh configuration file. To change this, perform the following steps:
  > ln -sf zynq_linux.sh default.sh
  ```
  
-Now you can compile applications to run on the ARM processor included in
-the Xilinx Zynq SoC, use the Xilinx tools and use the ReconOS scripts.
+Now you have created your working environment and are able to compile
+applications to run on the ARM processor included in the Xilinx Zynq SoC,
+use the Xilinx tools and use the ReconOS scripts.
 
 ## Setup Linux
 
+ReconOS builds up on an existing operating system, in this case Linux.
+Therefore, you have to setup Linux for your Zedboard, as described in the
+following steps.
+
 ### Compile U-Boot
 
-To boot and compile Linux you first have to compile U-Boot. Therefore,
-download the U-Boot sources and change into the directory.
+To boot Linux you need the U-Boot bootloader, you need to configure and build.
+Therefore, download the U-Boot sources and change into the directory.
 
 ```
 > cd $WD
@@ -137,9 +159,9 @@ by
 "bootm 0x3000000 - 0x2A00000\0"
 ```
 
-To adjust U-Boot to the configuration of the Zynq Processing System, disable
-the following features by opening `$WD/u-boot-xlnx/include/configs/zynq_zed.h`
-and commenting out the follwing features:
+To adjust U-Boot to the configuration of the Zynq Processing System as provided in the
+reverence designs of ReconOS, disable the following features
+by opening `$WD/u-boot-xlnx/include/configs/zynq_zed.h` and commenting out the following lines:
 
 ```
 #define CONFIG_ZYNQ_QSPI
@@ -154,6 +176,7 @@ Now you can compile U-Boot by using the make command.
 
 ### Compile Linux
 
+After you have compiled U-Boot you can proceed with Linux.
 At first you have to download the Linux sources and change into the
 directory.
 
@@ -174,12 +197,12 @@ configuration to your needs before compilation.
 
 ### Build the root filesystem
 
-To run Linux we need a root filesystem to mount. In this section we
+To run Linux, we also need a root filesystem to mount. In this section we
 will build a minimal root filesystem by compiling busybox. If you
-do not want to build the root filesystem by your own just download
+do not want to build the root filesystem by your own, just download
 it from the ReconOS homepage and extract it to $WD/nfs.
 
-The first step to create your own root filesystem is to donwload
+The first step to create your own root filesystem is to download
 the busybox sources. 
 
 ```
@@ -188,7 +211,7 @@ the busybox sources.
 > cd busybox
 ```
 
-To create a minimal busybox setup we use the provided default
+To create a minimal busybox setup, we use the provided default
 configuration in the stepbystep folder and compile it.
 
 ```
@@ -197,13 +220,13 @@ configuration in the stepbystep folder and compile it.
 > make install
 ```
 
-Then we can copy the generated files to our root filesystem.
+Then we can copy the generated files to our root filesystem:
 
 ```
 > cp -r _install/* $WD/nfs
 ```
 
-Besides busybox you must create some additional files and folders.
+Besides busybox you must create some additional files and folders:
 
 ```
 > mkdir dev etc etc/init.d lib mnt opt opt/reconos proc root sys tmp
@@ -259,8 +282,8 @@ WARNING: If you develop with other people on the same network make
 sure that you do not use the same IP.
 
 To allow the development board to access the root filesystem via NFS you
-have to create an export for it and assign an appropriate ip to your
-network interface.
+have to create an export for it and assign an appropriate IP to your
+network interface:
 
 ```
 > sudo cat >> /etc/exports <EOF
@@ -304,11 +327,11 @@ which must be created.
 ## Compiling the sort demo
 
 To create an EDK project out of your hardware threads, ReconOS provides a setup
-script which can be configured through a configuration file. So you need
+script which can be configured through a configuration file. You need
 to adjust this configuration file to your actual environment by opening
 `$RECONOS/demos/sort_demo/hw/setup_zynq` and adjusting the `base_design`
 to your board revision and tool version. Then you can create and
-build the entire hardware.
+build the entire hardware:
 
 ```
 > cd $RECONOS/demos/sort_demo/hw
@@ -326,13 +349,13 @@ to the kernel. The device-tree also includes the boot parameters you need to adj
 your configuration by editing `$RECONOS/demos/sort_demo/hw/edk_zynq_linux/device_tree.dts`
 and changing the `bootargs` parameter. For example you must replace `/nfs/zynqn` by
 `/home/<your username>/reconos/nfs` and the IP address. Then you can compile the
-device-tree into a binary format.
+device-tree into a binary format:
 
 ```
 > $WD/linux-xlnx/scripts/dtc/dts -I dts -O dtb -o device_tree.dtb device_tree.dts
 ```
 
-The last step is now to compile the software parts of the sort-demo.
+The last step is now to compile the software parts of the sort-demo:
 
 ```
 > cd $RECONOS/demos/sort_demo/linux
@@ -347,8 +370,8 @@ have to setup your Zynq board. Connect JTAG and UART to your PC and
 connect both to the same network. To select the right bootmode (jtagboot)
 you must set jumpers MI02 to MI06 to GND.
 
-The interaction with the board is established via UART. To see the ouput
-of the boot process, connect to the board.
+The interaction with the board is established via UART. To see the output
+of the boot process, connect to the board:
 
 ```
 > picocom -b 115200 /dev/ttyACM0
