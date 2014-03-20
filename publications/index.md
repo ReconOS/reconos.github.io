@@ -10,7 +10,7 @@ ReconOS has been developed in the context several academic research projects sin
 
 ## Journal papers
 
-* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner, Marco Platzner and Marco Platzner. **ReconOS – an operating system approach for reconfigurable computing**. *IEEE Micro*, 2014. To appear.
+* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner and Marco Platzner. **ReconOS – an operating system approach for reconfigurable computing**. *IEEE Micro*, 2014. To appear.
 
 * Markus Happe, Enno Lübbers and Marco Platzner. **A Self-adaptive Heterogeneous Multi-core Architecture for Embedded Real-time Video Object Tracking.**
   *International Journal of Real-Time Image Processing*, 2011, Springer Berlin / Heidelberg.
