@@ -13,21 +13,14 @@ slider:
       Dynamically Reconfigurable Hardware Threads,
       ReconOS allows to dynamically reconfigure your hardware threads utilizing the partial reconfiguration features of the FPGA]
 ---
-> "Modern platform FPGAs integrate fine-grained reconfigurable
-> logic with processor cores and allow the creation of complete
-> configurable systems-on-chip. However, design methodologies
-> have not kept up with the rise in complexity of the target
-> hardware. In particular, there is little overlap between the
-> programming model for embedded software running on a real-time
-> operating system and the programming model for digital logic.
-> In this paper, we present the operating system ReconOS which
-> supports both software and hardware threads with a single unified
-> programming model. ReconOS is based on eCos, a widely-used real-time
-> operating system (RTOS). We investigate the incurred time and 
-> area overheads, especially for inter-thread communication across
-> the hardware/-software boundary, and present a case study
-> demonstrating the feasibility of the RTOS-centric design approach."
-> <cite>ReconOS: An RTOS Supporting Hard-and Software Threads, E. Lübbers and M. Platzner</cite>
+> "The ReconOS operating system for reconfigurable computing offers a unified
+> multithreaded programming model and OS services for threads executing in
+> software and threads mapped to reconfigurable hardware. By semantically
+> integrating hardware accelerators into a standard OS environment,
+> ReconOS allows for rapid design-space exploration, supports a structured
+> application development process, and improves the portability of applications
+> between different reconfigurable computing systems."
+> <cite>ReconOS – an operating system approach for reconfigurable computing</cite>
 
 * ![image]({{ site.url }}/assets/images/bullet_puzzle.svg)
   # Multithreaded Programming Model
