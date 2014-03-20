@@ -10,10 +10,19 @@ ReconOS has been developed in the context several academic research projects sin
 
 ## Journal papers
 
-* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner, Christian Plessl and Marco Platzner. **ReconOS – an operating system approach for reconfigurable computing**. *IEEE Micro*, 2014. To appear.
+* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner, Christian Plessl and Marco Platzner. 
+  **ReconOS – an Operating System Approach for Reconfigurable Computing**. 
+  *IEEE Micro*, 2014. To appear.
 
-* Markus Happe, Enno Lübbers and Marco Platzner. **A Self-adaptive Heterogeneous Multi-core Architecture for Embedded Real-time Video Object Tracking.**
-  *International Journal of Real-Time Image Processing*, Volume 8, Issue 1, pp 95-110, 2013, Springer Berlin / Heidelberg. &#91;[PDF](happe13_jrtip.pdf)&#93;
+* Markus Happe, Enno Lübbers and Marco Platzner. 
+  **A Self-adaptive Heterogeneous Multi-core Architecture for Embedded Real-time Video Object Tracking.**
+  *International Journal of Real-Time Image Processing*, Volume 8, Issue 1, pp 95-110, Springer Berlin / Heidelberg, 2013. 
+  &#91;[PDF](happe13_jrtip.pdf)&#93;
+
+* Enno Lübbers and Marco Platzner.
+ **ReconOS: Multithreaded Programming for Reconfigurable Computers.**
+ In *Transactions on Embedded Computing Systems (TECS)*, Volume 9 Issue 1, IEEE, 2009.
+  &#91;[PDF](luebbers09_tecs.pdf)&#93;
 
 ## Refereed Conference Papers
 
@@ -22,9 +31,14 @@ ReconOS has been developed in the context several academic research projects sin
   In *Proc. of the Int. Workshop on Software Technologies for Future Embedded and Ubiquitous Systems (SEUS)*, IEEE, June 2013.
   &#91;[PDF](happe13_seus.pdf)&#93;
 
+*  Ariane Keller, Daniel Borkmann and Stephan Neuhaus 
+  **Hardware Support for Dynamic Protocol Stacks**
+  In *Proc. of the Symposium on Architectures for Networking and Communications Systems*, ACM/IEEE , October 2012.
+  &#91;[PDF](keller12_ancs.pdf)&#93;
+
 * Markus Happe, Andreas Agne, Christian Plessl and Marco Platzner.
   **Hardware/Software Platform for Self-Aware Compute Nodes.**
-  In *FPL Workshop on Self-Awareness in Reconfigurable Computing Systems (SRCS)*, Sept 2012.
+  In *FPL Workshop on Self-Awareness in Reconfigurable Computing Systems (SRCS)*, September 2012.
   &#91;[PDF](happe12_fpl.pdf)&#93;
 
 * Markus Happe and Enno Lübbers.
