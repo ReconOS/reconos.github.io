@@ -231,7 +231,7 @@ Besides busybox you must create some additional files and folders:
 ```
 > mkdir dev etc etc/init.d lib mnt opt opt/reconos proc root sys tmp
 
-> cat > $WD/nfs/etc/inittab <<EOF
+> cat > $WD/nfs/etc/inittab <<'EOF'
 ::sysinit:/etc/init.d/rcS
 
 # /bin/sh
@@ -249,7 +249,7 @@ ttyPS0::respawn:-/bin/sh
 ::shutdown:/bin/umount -a -r
 EOF
 
-> cat > $WD/nfs/etc/init.d/rcS <<EOF
+> cat > $WD/nfs/etc/init.d/rcS <<'EOF'
 #!/bin/sh
 
 echo "Starting rcS..."
@@ -258,16 +258,6 @@ echo "++ Mounting filesystem"
 mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t devtmpfs none /dev
-
-ttydev=`cat /sys/class/tty/ttyPS0/dev`
-ttymajor=${ttydev%%:*}
-ttyminor=${ttydev##*:}
-if [ -c /dev/ttyPS0 ]
-then
-	 rm /dev/ttyPS0
-fi
-
-mknod /dev/ttyPS0 c $ttymajor $ttyminor
 
 echo "rcS Complete"
 EOF
