@@ -13,7 +13,7 @@
 
 /gettingstarted:
   - [/gettingstarted/tutorial, Tutorial]
-#  - [/gettingstarted/starterkit, Demo Builds]
+  - [/gettingstarted/demos, Demo Builds]
 #  - [/gettingstarted/samplecode, Sample Code]
   - [/gettingstarted/github, Github Repository, "https://github.com/ReconOS/reconos", y]
 
