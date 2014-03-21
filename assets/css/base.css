@@ -45,12 +45,12 @@ h3 {
 }
 
 h4 {
-    font-size:14px;
-    font-weight:300;
-    font-style:italic;
-    color:#787878;
-    margin-top:15px;
-    margin-bottom:5px;
+	font-size:14px;
+	font-weight:300;
+	font-style:italic;
+	color:#787878;
+	margin-top:15px;
+	margin-bottom:5px;
 }
 
 p {
@@ -98,7 +98,7 @@ cite {
 }
 
 table {
-    border-spacing:0px;
+	border-spacing:0px;
 
 	margin-top:5px;
 	margin-bottom:20px;
@@ -107,15 +107,16 @@ table {
 }
 
 th {
-    font-weight:300;
-    color:#787878;
-    font-size:12px;
-    text-align:left;
+	font-weight:300;
+	color:#787878;
+	font-size:12px;
+	text-align:left;
 }
 
 td { 
-    padding-right:20px;
-	padding-bottom:5px;
+	padding-right:20px;
+	padding-top:3px;
+	padding-bottom:3px;
 
 	vertical-align:top;
 }
