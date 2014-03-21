@@ -273,11 +273,12 @@ sure that you do not use the same IP.
 
 To allow the development board to access the root filesystem via NFS you
 have to create an export for it and assign an appropriate IP to your
-network interface:
+network interface. Eventually you have to replace the `$UID` by your
+actual user and group id.
 
 ```
-> sudo cat >> /etc/exports <EOF
-$HOME/reconos/nfs 192.168.42.2(rw,no_root_squash,no_subtree_check)
+> sudo cat >> /etc/exports <<EOF
+$HOME/reconos/nfs 192.168.42.2(rw,no_subtree_check,anonuid=$UID,anongid=$UID)
 EOF
 
 > sudo ifconfig eth0:1 192.168.42.1 up
