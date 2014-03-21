@@ -1,8 +1,8 @@
 ---
-title: Tool Flow
+title: ReconOS Tool Flow
 layout: page
 ---
-# Tool Flow
+# ReconOS Tool Flow
 
 "The required sources comprise the software threads, the hardware threads and the specification of the ReconOS hardware architecture. 
 We code software threads in **C** and hardware threads in **VHDL**, using the ReconOS-provided VHDL libraries for OS communication and memory access.
