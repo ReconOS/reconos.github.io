@@ -6,20 +6,39 @@ layout: page
 
 ReconOS has been developed in the context several academic research projects since 2006. Below you find a comprehensive list of publications that describe selected aspects of ReconOS.
 
-#### These articles are provided for personal use only. Any other use requires prior permission of the author.
+*Copyright Notice:* This material is presented to ensure timely dissemination of scholarly and technical work. Copyright and all rights therein are retained by authors or by other copyright holders. All persons copying this information are expected to adhere to the terms and constraints invoked by each author's copyright. In most cases, these works may not be reposted without the explicit permission of the copyright holder.
 
 ## Journal papers
 
-* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner, Christian Plessl and Marco Platzner. **ReconOS – an operating system approach for reconfigurable computing**. *IEEE Micro*, 2014. To appear.
+* Andreas Agne, Markus Happe, Ariane Keller, Enno Lübbers, Bernhard Plattner, Christian Plessl and Marco Platzner. 
+  **ReconOS – an Operating System Approach for Reconfigurable Computing**. 
+  *IEEE Micro*, 2014. To appear.
 
-* Markus Happe, Enno Lübbers and Marco Platzner. **A Self-adaptive Heterogeneous Multi-core Architecture for Embedded Real-time Video Object Tracking.**
-  *International Journal of Real-Time Image Processing*, 2011, Springer Berlin / Heidelberg.
+* Markus Happe, Enno Lübbers and Marco Platzner. 
+  **A Self-adaptive Heterogeneous Multi-core Architecture for Embedded Real-time Video Object Tracking.**
+  *International Journal of Real-Time Image Processing*, Volume 8, Issue 1, pp 95-110, Springer Berlin / Heidelberg, 2013. 
+  &#91;[PDF](happe13_jrtip.pdf)&#93;
+
+* Enno Lübbers and Marco Platzner.
+ **ReconOS: Multithreaded Programming for Reconfigurable Computers.**
+ In *Transactions on Embedded Computing Systems (TECS)*, Volume 9 Issue 1, IEEE, 2009.
+  &#91;[PDF](luebbers09_tecs.pdf)&#93;
 
 ## Refereed Conference Papers
 
+* Markus Happe, Friedhelm Meyer auf der Heide, Peter Kling, Marco Platzner and Christian Plessl.
+  **On-The-Fly Computing: A Novel Paradigm for Individualized IT Services (Invited Paper).**
+  In *Proc. of the Int. Workshop on Software Technologies for Future Embedded and Ubiquitous Systems (SEUS)*, IEEE, June 2013.
+  &#91;[PDF](happe13_seus.pdf)&#93;
+
+*  Ariane Keller, Daniel Borkmann and Stephan Neuhaus 
+  **Hardware Support for Dynamic Protocol Stacks**
+  In *Proc. of the Symposium on Architectures for Networking and Communications Systems*, ACM/IEEE , October 2012.
+  &#91;[PDF](keller12_ancs.pdf)&#93;
+
 * Markus Happe, Andreas Agne, Christian Plessl and Marco Platzner.
   **Hardware/Software Platform for Self-Aware Compute Nodes.**
-  In *FPL Workshop on Self-Awareness in Reconfigurable Computing Systems (SRCS)*, Sept 2012.
+  In *FPL Workshop on Self-Awareness in Reconfigurable Computing Systems (SRCS)*, September 2012.
   &#91;[PDF](happe12_fpl.pdf)&#93;
 
 * Markus Happe and Enno Lübbers.
