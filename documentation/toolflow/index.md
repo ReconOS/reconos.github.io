@@ -7,7 +7,7 @@ layout: page
 "The required sources comprise the software threads, the hardware threads and the specification of the ReconOS hardware architecture. 
 We code software threads in **C** and hardware threads in **VHDL**, using the ReconOS-provided VHDL libraries for OS communication and memory access.
 
-![image]({{ site.url }}/assets/images/toolflow.svg =500x)
+![image]({{ site.url }}/assets/images/toolflow.svg)
 
 ReconOS extends the process for building a reconfigurable system-on-chip using standard **vendor tools**. On the software side, the delegate threads and **device drivers** for transparent communication with hardware threads are linked into the application executable and kernel image, respectively. On the hardware side, components such as the OS and memory interfaces as well as support logic for hardware threads are integrated into the tool flow.
 
