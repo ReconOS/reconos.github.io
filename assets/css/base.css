@@ -286,6 +286,7 @@ ul ul li {
 }
 
 #footer #logos img {
+	display:inline;
 	margin-left:10px;
 }
 
