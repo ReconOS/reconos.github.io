@@ -88,10 +88,30 @@ img {
 	margin:auto;
 }
 
+.figure {
+	margin-top:15px;
+	margin-bottom:15px;
+}
+
+.figure p {
+	font-family:"Roboto Condensed";
+	font-size:12px;
+	font-weight:300;
+	font-style:italic;
+	color:#787878;
+	text-align:center;
+
+	margin-top:5px;
+}
+
 blockquote {
 	font-family:Roboto Condensed;
 	font-weight:300;
 	color:#787878;
+	text-align:center;
+}
+
+blockquote p {
 	text-align:center;
 }
 
