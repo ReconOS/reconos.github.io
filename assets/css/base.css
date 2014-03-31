@@ -83,6 +83,11 @@ hr {
 	margin-bottom:25px;
 }
 
+img {
+	display:block;
+	margin:auto;
+}
+
 blockquote {
 	font-family:Roboto Condensed;
 	font-weight:300;
