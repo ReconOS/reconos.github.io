@@ -369,7 +369,7 @@ of the boot process, connect to the board:
 ```
 
 Then you can boot Linux and program the FPGA. This `zynq_boot_jtag.sh` script
-caches the last used files and uses these if you call zynq_boot_jtag.sh
+caches the last used files and uses these if you call `zynq_boot_jtag.sh`
 without parameters. So you do not have to specify all arguments again
 the next time you use it.
 
