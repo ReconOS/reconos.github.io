@@ -70,6 +70,11 @@ a:hover {
 	color:#823c3c;
 }
 
+p a {
+	font-family:"Roboto Condensed", Arial, sans-serif;
+	color:#787878;
+}
+
 hr {
 	height:1px;
 	border:none;
@@ -86,7 +91,7 @@ blockquote {
 }
 
 cite {
-	font-family:Roboto Condensed;
+	font-family:"Roboto Condensed";
 	font-size:12px;
 	font-weight:300;
 	font-style:italic;

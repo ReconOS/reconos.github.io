@@ -8,7 +8,7 @@ layout: page
  scrolling="no"
  frameborder="0"
  width="100%"
- height="600">
+ height="590">
 </iframe>
 
 <script type="text/javascript">
