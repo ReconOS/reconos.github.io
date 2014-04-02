@@ -185,7 +185,7 @@ ul ul li {
 }
 
 #content img {
-	width:90%;
+	max-width:90%;
 }
 
 #header {
