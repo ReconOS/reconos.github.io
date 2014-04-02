@@ -184,6 +184,10 @@ ul ul li {
 	padding-right:10px;
 }
 
+#content img {
+	width:90%;
+}
+
 #header {
 	margin-bottom:20px;
 	padding-bottom:5px;
