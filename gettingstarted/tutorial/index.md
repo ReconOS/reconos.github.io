@@ -87,7 +87,7 @@ At first you need to checkout the ReconOS repository:
 
 ```
 > cd $WD
-> git clone https://github.com/EPiCS/reconos.git
+> git clone https://github.com/reconos/reconos.git
 ```
 
 To use the ReconOS toolchain you must configure it by changing its configuration
