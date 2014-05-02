@@ -244,18 +244,13 @@ Besides busybox you must create some additional files and folders:
 > cat > $WD/nfs/etc/inittab <<'EOF'
 ::sysinit:/etc/init.d/rcS
 
-# /bin/sh
-#
 # Start an askfirst shell on the serial ports
-
 ttyPS0::respawn:-/bin/sh
 
 # What to do when restarting the init process
-
 ::restart:/sbin/init
 
 # What to do before rebooting
-
 ::shutdown:/bin/umount -a -r
 EOF
 
