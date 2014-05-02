@@ -348,7 +348,7 @@ and changing the `bootargs` parameter. For example you must replace `/nfs/zynqn`
 device-tree into a binary format:
 
 ```
-> $WD/linux-xlnx/scripts/dtc/dts -I dts -O dtb -o device_tree.dtb device_tree.dts
+> $WD/linux-xlnx/scripts/dtc/dtc -I dts -O dtb -o device_tree.dtb device_tree.dts
 ```
 
 The last step is now to compile the software parts of the sort-demo:
