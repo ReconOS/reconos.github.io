@@ -161,11 +161,21 @@ by
 
 To adjust U-Boot to the configuration of the Zynq Processing System as provided in the
 reverence designs of ReconOS, disable the following features
-by opening `$WD/u-boot-xlnx/include/configs/zynq_zed.h` and commenting out the following lines:
+by opening `$WD/u-boot-xlnx/include/configs/zynq_zed.h` and deleting the following lines:
 
 ```
 #define CONFIG_ZYNQ_QSPI
 #define CONFIG_ZYNQ_BOOT_FREEBSD
+```
+
+#### Hint for newer versions of U-Boot
+Newer versions of U-Boot include a Secondary Program Loader (SPL) to replace the classic
+Xilinx First Stage Bootlader. Since we load U-Boot via JTAG directly into the RAM, we do
+not need the SPL and should disable it by opening `$WD/u-boot-xlnx/include/configs/zynq-common.h`
+and deleting the following line:
+
+```
+#define CONFIG_SPL
 ```
 
 Now you can compile U-Boot by using the make command.
