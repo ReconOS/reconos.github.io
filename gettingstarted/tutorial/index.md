@@ -141,7 +141,7 @@ Therefore, download the U-Boot sources and change into the directory.
 ```
 
 Then configure the boot mode to download the kernel image via jtag by
-opening $WD/u-boot-xlnx/include/configs/zynq_common.h and replacing the
+opening `$WD/u-boot-xlnx/include/configs/zynq-common.h` and replacing the
 following lines
 
 ```
