@@ -5,3 +5,6 @@ pygments: true
 markdown: redcarpet
 redcarpet:
   extensions: ["fenced_code_blocks", "tables", "with_toc_data"]
+
+gems:
+  - jekyll-sitemap
