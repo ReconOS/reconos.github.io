@@ -9,11 +9,11 @@ layout: page
 This website is published by the University of Paderborn. The
 University of Paderborn is a statutory body and an institution
 of the State of North Rhine-Westphalia. The University is
-legally represented by its President, Prof. Dr. Nikolaus Risch,
+legally represented by its President, Prof. Dr. Wilhelm Schäfer,
 who carries the overall responsibility for this website:
 
 *President of the University of Paderborn*  
-Prof. Dr. Nikolaus Risch  
+Prof. Dr. Wilhelm Schäfer  
 University of Paderborn  
 Warburger Str. 100  
 33098 Paderborn, Germany  
