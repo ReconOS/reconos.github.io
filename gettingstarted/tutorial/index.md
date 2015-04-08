@@ -109,7 +109,7 @@ export the following variables, adjusted to your actual setup:
 ```
 export ARCH=arm
 export CROSS_COMPILE=/opt/Xilinx/SDK/2014.4/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
-export KDIR=$WD/linux-xlnx/y
+export KDIR=$WD/linux-xlnx/
 export PATH=$WD/u-boot-xlnx/tools/:$PATH
 export PATH=$WD/linux-xlnx/scripts/dtc:$PATH
 ```
@@ -263,12 +263,7 @@ copied together with a initialization script to the root filesystem.
 
 ```
 > cd $WD/reconos/linux/driver
-> make
-
-> mkdir -p $WD/nfs/opt/reconos
-> cp $WD/reconos/linux/driver/mreconos.ko $WD/nfs/opt/reconos
-> cp $WD/reconos/linux/scripts/reconos_init.sh $WD/nfs/opt/reconos
-> chmod +x $WD/nfs/opt/reconos/reconos_init.sh
+> make RECONOS_ARCH=zynq RECONOS_OS=linux RECONOS_MMU=true PREFIX=$WD/nfs/opt/reconos install
 ```
 
 You can then simply initialize the entire ReconOS system by executing
