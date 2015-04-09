@@ -5,8 +5,8 @@ layout: page
 # Step By Step Guide for the Zynq
 To get started using ReconOS, this guide leads you through the first steps to
 setup your development environment. You will build the sort demo and execute
-it on your board by following the step by step instructions given. The sort
-demo is an example application to demonstrate ReconOS and its concepts. It
+it on your board by following the step by step instructions given. The
+SortDemo is an example application to demonstrate ReconOS and its concepts. It
 uses both hardware and software threads to sort a bunch of data. The different
 threads synchronizes via mboxes and access the data via the memory subsystem
 of ReconOS. This guide includes the following steps:
@@ -275,80 +275,87 @@ You can then simply initialize the entire ReconOS system by executing
 
 ## Sort Demo
 
-To create an EDK project out of your hardware threads, ReconOS provides a setup
-script which can be configured through a configuration file. You need
-to adjust this configuration file to your actual environment by opening
-`$RECONOS/demos/sort_demo/hw/setup_zynq` and adjusting the `base_design`
-to your board revision and tool version. Then you can create and
-build the entire hardware:
+Until now, we have configured and installed a basic setup of our working
+environment and now we are going to get in touch with the very first ReconOS
+application, the well known SortDemo. You will see the toolflow of the ReconOS
+Development Kit (RDK) and how to implement an entire application. To get
+started with the RDK, the only thing you have to do is to source the settings
+file under `$WD/reconos/setting.sh`. After that, you can simply type `rdk` to
+start the development kit.
 
 ```
-> cd $RECONOS/demos/sort_demo/hw
-> reconos_setup.sh setup_zynq
-> cd edk_zynq_linux
+> cd $WD/reconos
+> source tools/settings.sh
+```
+
+So let's take a look into the SortDemo project folder in
+`$WD/reconos/demos/sort_demo`. It consists out of a source folder and a
+project file describing the structure of the application. Out of these
+sources, the RDK generates a complete EDK project for the hardware design and
+a ready to compile software project. To generate these two projects, simply
+start the RDK and execute `export_hw` and `export_sw`. To get more information
+for each command, you can execute it with the `--help` option and double tab
+reveals a list of all available commands.
+
+```
+> cd $WD/reconos/demos/sort_demo
+> rdk
+ReconOS Toolchain> export_hw
+ReconOS Toolchain> export_sw
+ReconOS Toolchain> exit
+```
+
+Now, the RDK has created two new folders, `build.hw` and `build.sw`, which
+contain the projects for hardware and software, respectively. To build both of
+them, we again need to setup some environment variable and compile an
+additional library. Again, the `CROSS_COMPILER` environment variable specifies
+the compiler for the ARM processor used for the software compilation. The time
+library is used by the SortDemo to get precise benchmarking results.
+
+```
+> export CROSS_COMPILE=/opt/Xilinx/SDK/2014.4/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
+> cd $WD/reconos/linux/tools/timer
+> make
+```
+Now you can implement both projects using make and the Xilinx Platform Studio (XPS).
+
+```
+> cd $WD/recons/demos/sort_demo/build.sw
+> make -j3 PREFIX=$WD/nfs/opt/reconos install
+> cd $WD/reconos/demos/sort_demo/build.hw
 > xps -nw system
-xps> run hwclean
 xps> run bits
 xps> exit
 ```
-
-To detect the available hardware and its configuration, Linux reads in a device-tree
-including all this information. Therefore, you have to make the device-tree available
-to the kernel. The device-tree also includes the boot parameters you need to adjust to
-your configuration by editing `$RECONOS/demos/sort_demo/hw/edk_zynq_linux/device_tree.dts`
-and changing the `bootargs` parameter. For example you must replace `/nfs/zynqn` by
-`/home/<your username>/reconos/nfs` and the IP address. Then you can compile the
-device-tree into a binary format:
-
-```
-> $WD/linux-xlnx/scripts/dtc/dtc -I dts -O dtb -o device_tree.dtb device_tree.dts
-```
-
-The last step is now to compile the software parts of the sort-demo:
-
-```
-> cd $RECONOS/demos/sort_demo/linux
-> make
-> cp sort_demo $WD/nfs/opt/reconos
-```
+The bitstream generation will take a while, so it might be the right time to
+get a coffee.
 
 ### Running the Demo
 
-Now you have setup all relevant parts and can run the demo. At first you
-have to setup your Zynq board. Connect JTAG and UART to your PC and
-connect both to the same network. To select the right bootmode (jtagboot)
-you must set jumpers MI02 to MI06 to GND.
-
-The interaction with the board is established via UART. To see the output
-of the boot process, connect to the board:
+Now you have everything you need to run the SortDemo on real hardware. At
+first, setup the SD card shipped with the board. The only thing you have to
+do, is to cleanup the card and copy the right files to it.
 
 ```
-> picocom -b 115200 /dev/ttyACM0
+> cp $WD/u-boot-xlnx/boot.bin /mnt/boot.bin
+> cp $WD/u-boot-xlnx/u-boot.img /mnt/u-boot-dtb.img
+> cp $WD/linux-xlnx/arch/boot/uImage /mnt/uImage
+> cp $WD/linux-xlnx/arch/boot/dts/zynq-zed.dtb /mnt/devicetree.dtb
+> cp $WD/reconos/demos/sort_demo/build.hw/implementation/system.bit /mnt/download.bit
+> cat > /mnt/uEnv.txt <<'EOF'
+sdboot=if mmcinfo; then run uenvboot; echo Copying Linux from SD to RAM... && load mmc 0 ${kernel_load_address} ${kernel_image} && load mmc 0 ${devicetree_load_address} ${devicetree_image} && bootm ${kernel_load_address} - ${devicetree_load_address}; fi
+
+EOF
 ```
 
-Then you can boot Linux and program the FPGA. This `zynq_boot_jtag.sh` script
-caches the last used files and uses these if you call `zynq_boot_jtag.sh`
-without parameters. So you do not have to specify all arguments again
-the next time you use it.
-
-```
-> zynq_boot_jtag.sh $WD/linux-xlnx/arch/arm/boot/uImage
-                    $RECONOS/demos/sort_demo/hw/edk_zynq_linux/device_tree.dtb
-                    $RECONOS/demos/sort_demo/hw/edk_zynq_linux/ps7_init.tcl
-                    $WD/u-boot-xlnx/u-boot
-
-> cd $RECONOS/demos/sort_demo/hw/edk_zynq_linux
-> reconos_download_bitstream.sh implementation/system.bit
-```
-
-Now you should see Linux booting and after some seconds a command prompt should
-appear. Now you can use the Linux on the Zedboard just like every other Linux
-machine. To run the sort-demo execute the following commands.
+After that, insert the SD card into the Zedboard and configure the bootmode by
+setting jumpers MI02, MI03 and MI06 to GND and MI04 and MI05 to 3V3. Turn on
+the board, connect via UART and see how Linux boots. When a command prompt
+appears, start the SortDemo and have fun.
 
 ```
 zynq> cd /opt/reconos
 zynq> ./reconos_init.sh
-zynq> cd /opt/reconos
-zynq> ./sort_demo
-zynq> ./sort_demo 4 2 16
+zynq> ./sortdemo
+zynq> ./sortdemo 2 1 16
 ```
