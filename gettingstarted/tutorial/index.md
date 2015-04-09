@@ -173,7 +173,6 @@ you wish, you can adjust the configuration to your needs before compilation.
 
 ```
 > make xilinx_zynq_defconfig
-> make -j3 uImage LOADADDR=0x00008000
 ```
 
 Additionally, Linux needs a device tree describing the underlying hardware.
@@ -186,6 +185,12 @@ zed.dts` to match the following. Of course, you need to adjust `<<serverip>>`,
 ```
 bootargs = "console=ttyPS0,115200 root=/dev/nfs rw nfsroot=<<serverip>>:<<path>>,tcp,nfsvers=3 ip=<<boardip>>:::255.255.255.0:reconos:eth0:off earlyprintk";
 
+```
+
+Now you can compile Linux by the following make command:
+
+```
+> make -j3 uImage LOADADDR=0x00008000
 ```
 
 ### Build the root filesystem
@@ -234,7 +239,6 @@ echo "Starting rcS..."
 echo "++ Mounting filesystem"
 mount -t proc none /proc
 mount -t sysfs none /sys
-mount -t devtmpfs none /dev
 
 echo "rcS Complete"
 EOF
@@ -267,7 +271,7 @@ copied together with a initialization script to the root filesystem.
 ```
 
 You can then simply initialize the entire ReconOS system by executing
-reconos_init.sh on the ARM processor.
+`reconos_init.sh` on the ARM processor.
 
 ## Sort Demo
 
