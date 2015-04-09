@@ -191,6 +191,7 @@ Now you can compile Linux by the following make command:
 
 ```
 > make -j3 uImage LOADADDR=0x00008000
+> make dtbs
 ```
 
 ### Build the root filesystem
