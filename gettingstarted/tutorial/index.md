@@ -13,12 +13,12 @@ of ReconOS. This guide includes the following steps:
 
 * Prerequisites
 
-* Linux
-  * U-Boot
-  * Linux Kernel
-  * Root Filesystem
+* Boot the Linux Kernel
+  * Compile U-Boot
+  * Compile Linux Kernel
+  * Setup Root Filesystem
 
-* SortDemo
+* Run the SortDemo
   * Hardware Project
   * Software Project
   * Running the Demo
@@ -47,9 +47,7 @@ installation of the appropriate tools and your development board:
   * JTAG connection to program the FPGA
   * UART connection to interact with the board
 
-Furthermore, we need to download some external components. To make
-sure that you can follow the steps without any problem, you can use
-the following releases:
+Furthermore, we need to download some external components as listed below.
 
 * Linux Kernel: [https://github.com/xilinx/linux-xlnx](https://github.com/xilinx/linux-xlnx)
 
@@ -86,113 +84,143 @@ $WD
   \- nfs           -> the root filesystem
 ```
 
-## Linux
+## Boot the Linux Kernel
 
-ReconOS builds up on an existing operating system, in this case Linux. In this
-section you will setup Linux on an SD card mounting the root filesystem via
-NFS. This allows to simply reboot the entire board by turning it off and on
-again and gives you the flexibility to exchange files via network easily.
+ReconOS builds up on an existing operating system. In this section you will
+setup Linux and all required boot loaders to execute it on the Zedboard. Do
+not worry if you have never cross-compiled your own Linux kernel before or
+never booted a kernel using U-Boot. It sounds more horrific than it actually
+is.
 
-The Zynq boot process consists out of several stages. At first the internal
-boot ROM is loaded and executes the First Stage Boot Loader (FSBL) from a non-
-volatile memory, dependent on the jumper configuration. The FSBL initializes
-the hardware based on the configuration of the user and executes the U-Boot
-bootloader, which finally boots Linux. Initially, the FSBL was provided by
-Xilinx as proprietary software, but recently, U-Boot introduced an open source
-alternative called Secondary Program Loader (SPL). Although not officially
-supported by Xilinx, we will use this SPL in this tutorial.
+In the setup we will create in the following sections, the kernel itself is
+located on the SD card and mounts the root filesystem via NFS during startup.
+This allows to simply reboot the entire board by turning it off and on again
+and gives you the flexibility to exchange files via network easily.
 
-Compiling Linux and U-Boot requires some environment variables to be set to
-specify the target architecture and the appropriate cross compiler. Therefore,
-export the following variables, adjusted to your actual setup:
+Before getting started, we want to briefly explain how the boot process on the
+Zynq looks like. At first, the internal boot ROM is loaded. It setups the
+system and executes the so-called First Stage Boot Loader (FSBL) from a non-
+volatile memory location, dependent on the jumper configuration. The FSBL
+initializes the hardware as configured by the developer (`ps7_init`) and
+executes any provided program. In our case, this is U-Boot in the role of a
+primary bootloader, which is responsible for loading and booting the Linux
+kernel.
+
+While the boot ROM is already stored at the development board, the other
+executables involved in the boot process need to be provided by the developer.
+Especially, the FSBL contains device specific code and is, therefore, provided
+by Xilinx as proprietary software. However, recently, the U-Boot project
+developed an open source alternative called Secondary Program Loader (SPL).
+Although not officially supported by Xilinx, we will use the SPL in this
+tutorial, since it is integrated into the U-Boot build process and requires no
+further configuration.
+
+But now enough about the theory, let's get our hands dirty and be happy if we
+see our first command prompt via UART.
+
+### Build Environment
+
+Cross-compiling U-Boot and the Linux kernel require some environment variables
+to specify the target architecture and the appropriate cross compiler.
+Therefore, export the following variables:
 
 ```
 export ARCH=arm
-export CROSS_COMPILE=/opt/Xilinx/SDK/2014.4/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
+export CROSS_COMPILE=/opt/Xilinx/14.7/ISE_DS/EDK/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
 export KDIR=$WD/linux-xlnx/
 export PATH=$WD/u-boot-xlnx/tools/:$PATH
-export PATH=$WD/linux-xlnx/scripts/dtc:$PATH
+export PATH=$WD/linux-xlnx/scripts/dtc/:$PATH
 ```
+
+For the cross compiler you can also use a different one, for example the
+compilers shipped with the newer SDK versions under
+`/opt/Xilinx/SDK/xxxx.x/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-`.
 
 ### Compile U-Boot
 
-At first you need to copy the hardware initialization files for the Zedboard
-into the U-Boot sources. The `ps7_init` files contain initialization code to
-setup the configurable hardware of the processing system. Although U-Boot
-compiles fine without these sources, it will not run in the end. Basic
-initialization files are provided in the Embedded Software repository.
-
-```
-> cd $WD/u-boot-xlnx
-> cp ../embeddedsw/lib/sw_apps/zynq_fsbl/misc/zed/ps7_init_gpl.* board/xilinx/zynq/
-```
+As already said, the FSBL uses the `ps7_init` to configure the system. Since
+we use the SPL as an FSBL replacement, we also need the `ps7_init` code here.
+Fortunately, U-Boot already comes with a basic configuration which we will use
+right now. However, note that if you change anything in your processing
+system, you must recompile U-Boot and replace the `ps7_init` files with your
+own ones.
 
 The SPL itself is also capable of booting Linux directly but requires non-
 volatile memory to store the kernel parameters. Therefore, we will not use
 this feature and execute a full blown U-Boot instance, which loads the kernel
 image and device tree and boots the kernel. Therefore, we need to disable the
-direct boot feature by applying the following diff:
+direct boot feature by applying the following diff, since the options are not
+yet configurable via the KConfig.
 
 ```
+diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
+index 0825cc4..409e5d0 100644
 --- a/include/configs/zynq-common.h
 +++ b/include/configs/zynq-common.h
-@@ -477,7 +477,7 @@
- /* FPGA support */
- #define CONFIG_SPL_FPGA_SUPPORT
- #define CONFIG_SPL_FPGA_LOAD_ADDR      0x1000000
--/* #define CONFIG_SPL_FPGA_BIT */
-+#define CONFIG_SPL_FPGA_BIT
- #ifdef CONFIG_SPL_FPGA_BIT
- # define CONFIG_SPL_FPGA_LOAD_ARGS_NAME "download.bit"
- #else
-@@ -530,10 +530,6 @@
+@@ -467,9 +467,6 @@
  #define CONFIG_SPL_ETH_DEVICE "Gem.e000b000"
  #endif
  
 -/* for booting directly linux */
 -#define CONFIG_SPL_OS_BOOT
--#define CONFIG_SYS_SPI_KERNEL_OFFS     0 /* FIXME */
 -
  /* SP location before relocation, must use scratch RAM */
  #define CONFIG_SPL_TEXT_BASE   0x0
-
 ```
 
 Now you can configure and compile U-Boot by using the make command:
 
 ```
 > make zynq_zed_config
-> make -j3
+> make
 ```
 
-### Compile Linux
+Unfortunately, you will get an error message, which looks like the following
+one. Do not worry about it right now. U-Boot just complains about not being
+able to compile the device trees using `dtc`, a tool which will be compiled
+during build of the kernel.
 
-After you have compiled U-Boot you can proceed with Linux. Therefore,
-configure the Linux kernel using the default configuration and compile it. If
-you wish, you can adjust the configuration to your needs before compilation.
+```
+DTC     arch/arm/dts/zynq-zc702.dtb
+/bin/sh: dtc: command not found
+make[2]: *** [scripts/Makefile.lib:299: arch/arm/dts/zynq-zc702.dtb] Error 127
+make[1]: *** [dts/Makefile:36: arch-dtbs] Error 2
+make: *** [Makefile:1210: dts] Error 2
+
+```
+
+### Compile Linux Kernel
+
+After we have compiled U-Boot now, or at least most of it, we can proceed with
+Linux. You will see, that cross-compiling your own kernel is easier than you
+might thought, since we will just use the default configuration. If you wish,
+you can adjust the configuration to your needs before compilation.
 
 ```
 > make xilinx_zynq_defconfig
 ```
 
 Additionally, Linux needs a device tree describing the underlying hardware.
-The device tree also includes the kernel parameters passed during the boot
-process. You need to adjust these parameters to fit our configuration.
-Therefore, adjust the bootargs in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-
-zed.dts` to match the following. Of course, you need to adjust `<<serverip>>`,
-`<<path>>` and `<<boardip>>` to fit your configuration.
+The device tree also includes the kernel parameters passed during the boot.
+You need to adjust these parameters to fit our configuration. Therefore,
+adjust the bootargs in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dts`. Of
+course, you need to adjust `<<serverip>>`, `<<path>>` and `<<boardip>>`.
 
 ```
 bootargs = "console=ttyPS0,115200 root=/dev/nfs rw nfsroot=<<serverip>>:<<path>>,tcp,nfsvers=3 ip=<<boardip>>:::255.255.255.0:reconos:eth0:off earlyprintk";
 
 ```
 
-Now you can compile Linux by the following make command:
+Now you can compile Linux by the following make command. This might take a
+while, so grab a coffee and cross your fingers.
 
 ```
 > make -j3 uImage LOADADDR=0x00008000
 > make dtbs
-```
+
+Remember, that we got an error message when compiling U-Boot before? Now,
+after we have compiled the kernel, we can simply execute `make` again and
+should not get any further errors.
 
 ### Build the root filesystem
 
@@ -245,6 +273,8 @@ echo "rcS Complete"
 EOF
 
 > chmod +x $WD/nfs/etc/init.d/rcS
+
+> ln -s bin/busybox init
 ```
 
 ### Setup NFS
@@ -254,7 +284,7 @@ export for it by adding the following line to your `/etc/exports` file.
 Replace `<<path>>`, `<<boardip>>`, `<<uid>>` and `<<gid>>` by the appropriate values.
 
 ```
-<<path> <<boardip>>(rw,no_subtree_check,anonuid=<<uid>>,anongid=<<gid>>)
+<<path> <<boardip>>(rw,subtree_check,all_squash,anonuid=<<uid>>,anongid=<<gid>>)
 ```
 
 Of course, you need to make sure to configure both the board and your
