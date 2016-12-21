@@ -55,8 +55,6 @@ Furthermore, we need to download some external components as listed below.
 
 * Busybox: [git://git.busybox.net/busybox](git://git.busybox.net/busybox)
 
-* Xilinx Embedded Software Sources: [https://github.com/xilinx/embeddedsw](https://github.com/xilinx/embeddedsw)
-
 ### Setup Working Directory
 
 At first you should clone all the repositories listed above and create a
@@ -68,7 +66,6 @@ folder for the root filesystem. `$WD` represents your working directory.
 > git clone https://github.com/xilinx/linux-xlnx
 > git clone https://github.com/xilinx/u-boot-xlnx
 > git clone git://git.busybox.net/busybox
-> git clone https://github.com/xilinx/embeddedsw
 > mkdir nfs
 ```
 
@@ -80,7 +77,6 @@ $WD
   \- linux-xlnx    -> the Linux kernel sources
   \- u-boot-xlnx   -> the U-Boot sources
   \- busybox       -> the busybox sources
-  \- embeddedsw    -> the Xilinx Embedded Software sources
   \- nfs           -> the root filesystem
 ```
 
