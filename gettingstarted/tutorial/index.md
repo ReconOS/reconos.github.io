@@ -199,6 +199,7 @@ while, so grab a coffee and cross your fingers.
 ```
 > make -j3 uImage LOADADDR=0x00008000
 > make dtbs
+```
 
 Remember, that we got an error message when compiling U-Boot before? Now,
 after we have compiled the kernel, we can simply execute `make` again and
