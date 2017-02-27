@@ -167,7 +167,7 @@ not need to use a ramdisk. To do so, apply the following patch.
                         "run uenvboot; " \
 ```
 
-So, to configure and build U-Boot exectue the following commands.
+Finally, to configure and build U-Boot, execute the following commands.
 
 ```
 > make zynq_zed_defconfig
