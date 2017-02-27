@@ -331,11 +331,13 @@ library is used by the SortDemo to get precise benchmarking results.
 > cd $WD/reconos/linux/tools/timer
 > make
 ```
-Now you can implement both projects using make and the Xilinx Platform Studio (XPS).
+
+Now you can implement both projects using make and the Xilinx Platform Studio
+(XPS).
 
 ```
 > cd $WD/recons/demos/sort_demo/build.sw
-> make -j3 PREFIX=$WD/nfs/opt/reconos install
+> make PREFIX=$WD/nfs/opt/reconos install
 > cd $WD/reconos/demos/sort_demo/build.hw
 > xps -nw system
 xps> run bits
