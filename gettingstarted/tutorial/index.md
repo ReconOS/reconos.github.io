@@ -166,7 +166,7 @@ index 0825cc4..409e5d0 100644
 Now you can configure and compile U-Boot by using the make command:
 
 ```
-> make zynq_zed_config
+> make zynq_zed_defconfig
 > make
 ```
 
