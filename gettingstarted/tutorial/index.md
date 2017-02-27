@@ -357,7 +357,7 @@ do, is to cleanup the card and copy the right files to it.
 > cp $WD/u-boot-xlnx/u-boot.img /mnt/u-boot.img
 > cp $WD/linux-xlnx/arch/arm/boot/uImage /mnt/uImage
 > cp $WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dtb /mnt/devicetree.dtb
-> cp $WD/reconos/demos/sort_demo/build.hw/implementation/system.bit /mnt/download.bit
+> cp $WD/reconos/demos/sort_demo/build.hw/implementation/system.bin /mnt/fpga.bin
 > cat > /mnt/uEnv.txt <<'EOF'
 sdboot=if mmcinfo; then run uenvboot; echo Copying Linux from SD to RAM... && load mmc 0 ${kernel_load_address} ${kernel_image} && load mmc 0 ${devicetree_load_address} ${devicetree_image} && bootm ${kernel_load_address} - ${devicetree_load_address}; fi
 
