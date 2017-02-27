@@ -149,6 +149,24 @@ via the KConfig in `SPL / TPL -> Activate Falcon Mode`. You can choose the
 preferred way of disabling this option, e.g. by editing the `.config` directly
 or using `make menuconfig`.
 
+Furthermore, we need to patch the boot command executed by U-Boot, since we do
+not need to use a ramdisk. To do so, apply the following patch.
+
+```
+--- a/include/configs/zynq-common.h
++++ b/include/configs/zynq-common.h
+@@ -259,8 +259,7 @@
+                        "echo Copying Linux from SD to RAM... && " \
+                        "load mmc 0 ${kernel_load_address} ${kernel_image} && " \
+                        "load mmc 0 ${devicetree_load_address} ${devicetree_image} && " \
+-                       "load mmc 0 ${ramdisk_load_address} ${ramdisk_image} && " \
+-                       "bootm ${kernel_load_address} ${ramdisk_load_address} ${devicetree_load_address}; " \
++                       "bootm ${kernel_load_address} - ${devicetree_load_address}; " \
+                "fi\0" \
+        "usbboot=if usb start; then " \
+                        "run uenvboot; " \
+```
+
 So, to configure and build U-Boot exectue the following commands.
 
 ```
