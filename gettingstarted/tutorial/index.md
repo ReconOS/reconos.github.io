@@ -95,12 +95,11 @@ and gives you the flexibility to exchange files via network easily.
 
 Before getting started, we want to briefly explain how the boot process on the
 Zynq looks like. At first, the internal boot ROM is loaded. It setups the
-system and executes the so-called First Stage Boot Loader (FSBL) from a non-
-volatile memory location, dependent on the jumper configuration. The FSBL
-initializes the hardware as configured by the developer (`ps7_init`) and
-executes any provided program. In our case, this is U-Boot in the role of a
-primary bootloader, which is responsible for loading and booting the Linux
-kernel.
+system and executes the so-called First Stage Boot Loader (FSBL) dependent on
+the jumper configuration. The FSBL initializes the hardware as configured by
+the developer (`ps7_init`) and executes any provided program. In our case,
+this is U-Boot in the role of a primary bootloader, which is responsible for
+loading and booting the Linux kernel.
 
 While the boot ROM is already stored at the development board, the other
 executables involved in the boot process need to be provided by the developer.
