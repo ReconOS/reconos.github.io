@@ -353,7 +353,7 @@ first, setup the SD card shipped with the board. The only thing you have to
 do, is to cleanup the card and copy the right files to it.
 
 ```
-> cp $WD/u-boot-xlnx/boot.bin /mnt/boot.bin
+> cp $WD/u-boot-xlnx/spl/boot.bin /mnt/boot.bin
 > cp $WD/u-boot-xlnx/u-boot.img /mnt/u-boot-dtb.img
 > cp $WD/linux-xlnx/arch/arm/boot/uImage /mnt/uImage
 > cp $WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dtb /mnt/devicetree.dtb
