@@ -140,33 +140,20 @@ right now. However, note that if you change anything in your processing
 system, you must recompile U-Boot and replace the `ps7_init` files with your
 own ones.
 
-The SPL itself is also capable of booting Linux directly but requires non-
-volatile memory to store the kernel parameters. Therefore, we will not use
-this feature and execute a full blown U-Boot instance, which loads the kernel
-image and device tree and boots the kernel. Therefore, we need to disable the
-direct boot feature by applying the following diff, since the options are not
-yet configurable via the KConfig.
+The SPL is also capable of booting Linux directly but requires non-volatile
+memory to store the kernel parameters. Since we do not want to setup this, we
+will execute a full blown U-Boot instance, loading the kernel image and device
+tree from SD-Card. Therefore, we need to disable the direct boot feature in
+the configuration. In the latest U-Boot versions this option is now available
+via the KConfig in `SPL / TPL -> Activate Falcon Mode`. You can choose the
+preferred way of disabling this option, e.g. by editing the `.config` directly
+or using `make menuconfig`.
 
-```
-diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
-index 0825cc4..409e5d0 100644
---- a/include/configs/zynq-common.h
-+++ b/include/configs/zynq-common.h
-@@ -467,9 +467,6 @@
- #define CONFIG_SPL_ETH_DEVICE "Gem.e000b000"
- #endif
- 
--/* for booting directly linux */
--#define CONFIG_SPL_OS_BOOT
--
- /* SP location before relocation, must use scratch RAM */
- #define CONFIG_SPL_TEXT_BASE   0x0
-```
-
-Now you can configure and compile U-Boot by using the make command:
+So, to configure and build U-Boot exectue the following commands.
 
 ```
 > make zynq_zed_defconfig
+> make menuconfig #disable Falcom Mode here
 > make
 ```
 
