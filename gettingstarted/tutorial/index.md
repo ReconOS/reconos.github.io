@@ -200,16 +200,69 @@ you can adjust the configuration to your needs before compilation.
 > make xilinx_zynq_defconfig
 ```
 
-Additionally, Linux needs a device tree describing the underlying hardware.
-The device tree also includes the kernel parameters passed during the boot.
-You need to adjust these parameters to fit our configuration. Therefore,
-adjust the bootargs in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dts`. Of
-course, you need to adjust `<<serverip>>`, `<<path>>` and `<<boardip>>`.
+Additionally, Linux needs a device tree describing the underlying hardware and
+including the kernel parameters passed during the boot. You need to adjust the
+default device tree shipped with the kernel to fit our configuration.
+The file for the Zedboard can be found in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-
+zed.dts` and the following diff shows the necessary changes.
+
+The `bootargs` setting includes the kernel parameters passed during boot. We
+specify the correct console and mount the root filesystem via NFS. Of course,
+you need to adjust `<<hostip>>`, `<<path>>` and `<<boardip>>` to your setup.
+
+Furthermore, you can see the ReconOS components added to the device tree.
+These components include the correct addresses and used interrupt handlers.
 
 ```
-bootargs = "console=ttyPS0,115200 root=/dev/nfs rw nfsroot=<<serverip>>:<<path>>,tcp,nfsvers=3 ip=<<boardip>>:::255.255.255.0:reconos:eth0:off earlyprintk";
-
+--- a/arch/arm/boot/dts/zynq-zed.dts
++++ b/arch/arm/boot/dts/zynq-zed.dts
+@@ -31,7 +31,7 @@
+        };
+ 
+        chosen {
+-               bootargs = "";
++               bootargs = "console=ttyPS0,115200 root=/dev/nfs rw nfsroot=<<hostip>>:<<path>>,tcp,nfsvers=3 ip=<<boardip>>:::255.255.255.0:reconos:eth0:off earlyprintk";
+                stdout-path = "serial0:115200n8";
+        };
+ 
+@@ -42,6 +42,27 @@
+                view-port = <0x0170>;
+                drv-vbus;
+        };
++
++       amba: amba {
++               reconos_osif: reconos_osif@75a00000 {
++                       compatible = "upb,reconos-osif-3.1";
++                       reg = <0x75a00000 0x10000>;
++               };
++
++               reconos_osif_intc: reconos_osif_intc@7b400000 {
++                       compatible = "upb,reconos-osif-intc-3.1";
++                       reg = <0x7b400000 0x10000>;
++                       interrup-parent = <&intc>;
++                       interrupts = <0 58 4>;
++               };
++
++               reconos_proc_control: reconos_proc_control@6fe00000 {
++                       compatible = "upb,reconos-control-3.1";
++                       reg = <0x6fe00000 0x10000>;
++                       interrupt-parent = <&intc>;
++                       interrupts = <0 59 4>;
++               };
++       };
+ };
+ 
+ &clkc {
 ```
+
+> Note, that driver implementation in the current `develop` branch is just a
+> quick fix for the recent changes in the linux kernel. In the `develop_ic`
+> there is a new driver in development, which uses the correct mechanisms to
+> automatically load the correct drivers based on the device tree
+> configuration. For this one, the `reconos_osif_intc` node can be removed and
+> its interrupt line needs to be added to the `reconos_osif` node. However,
+> the new driver is not completely implemented and also needs some changes in
+> the hardware cores.
 
 Now you can compile Linux by the following make command. This might take a
 while, so grab a coffee and cross your fingers.
