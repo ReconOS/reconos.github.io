@@ -256,7 +256,7 @@ These components include the correct addresses and used interrupt handlers.
 ```
 
 > Note, that driver implementation in the current `develop` branch is just a
-> quick fix for the recent changes in the linux kernel. In the `develop_ic`
+> quick fix for the recent changes in the Linux kernel. In the `develop_ic`
 > there is a new driver in development, which uses the correct mechanisms to
 > automatically load the correct drivers based on the device tree
 > configuration. For this one, the `reconos_osif_intc` node can be removed and
