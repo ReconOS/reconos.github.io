@@ -120,6 +120,7 @@ to specify the target architecture and the appropriate cross compiler.
 Therefore, export the following variables:
 
 ```
+export WD=<<path to your working directory>>
 export ARCH=arm
 export CROSS_COMPILE=/opt/Xilinx/14.7/ISE_DS/EDK/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
 export KDIR=$WD/linux-xlnx/
@@ -398,7 +399,7 @@ the compiler for the ARM processor used for the software compilation. The time
 library is used by the SortDemo to get precise benchmarking results.
 
 ```
-> export CROSS_COMPILE=/opt/Xilinx/SDK/2014.4/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
+> export CROSS_COMPILE=/opt/Xilinx/SDK/2016.2/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
 > cd $WD/reconos/linux/tools/timer
 > make
 ```
@@ -407,7 +408,7 @@ Now you can implement both projects using make and the Xilinx Platform Studio
 (XPS).
 
 ```
-> cd $WD/recons/demos/sort_demo/build.sw
+> cd $WD/reconos/demos/sort_demo/build.sw
 > make PREFIX=$WD/nfs/opt/reconos install
 > cd $WD/reconos/demos/sort_demo/build.hw
 > xps -nw system
