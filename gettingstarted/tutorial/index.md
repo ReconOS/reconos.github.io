@@ -30,7 +30,7 @@ We assume that you have basic knowledge of the development for
 an FPGA, especially for Systems on Chip, and that you have a working
 installation of the appropriate tools and your development board:
 
-* Linux workstation with a distribution of your choice, including
+* Linux workstation with a distribution of your choice (tested with Ubuntu 14.04), including
   * picocom
   * NFS server
   * Python 3.4 or greater
@@ -44,7 +44,7 @@ installation of the appropriate tools and your development board:
 
 * Evaluation board connected to your workstation
   (For this guide the Zedboard Rev. C or D)
-  * JTAG connection to program the FPGA
+  * JTAG connection to program the FPGA (optional)
   * UART connection to interact with the board
 
 Furthermore, we need to download some external components as listed below.
@@ -132,6 +132,18 @@ For the cross compiler you can also use a different one, for example the
 compilers shipped with the newer SDK versions under
 `/opt/Xilinx/SDK/xxxx.x/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-`.
 
+### Compile scripts
+
+As preparation for compilation of U-Boot we need to build a tool (i.e. dtc) shipped with the linux kernel sources.
+We will come back later to compile the kernel.
+```
+> cd $WD/linux-xlnx
+> git checkout -b wb xilinx-v2016.2
+> make xilinx_zynq_defconfig
+> make prepare
+> make scripts
+```
+
 ### Compile U-Boot
 
 As already said, the FSBL uses the `ps7_init` to configure the system. Since
@@ -171,23 +183,11 @@ not need to use a ramdisk. To do so, apply the following patch.
 Finally, to configure and build U-Boot, execute the following commands.
 
 ```
+> cd $WD/u-boot-xlnx
+> git checkout -b wb xilinx-v2016.2
 > make zynq_zed_defconfig
 > make menuconfig #disable Falcom Mode here
 > make
-```
-
-Unfortunately, you will get an error message, which looks like the following
-one. Do not worry about it right now. U-Boot just complains about not being
-able to compile the device trees using `dtc`, a tool which will be compiled
-during build of the kernel.
-
-```
-DTC     arch/arm/dts/zynq-zc702.dtb
-/bin/sh: dtc: command not found
-make[2]: *** [scripts/Makefile.lib:299: arch/arm/dts/zynq-zc702.dtb] Error 127
-make[1]: *** [dts/Makefile:36: arch-dtbs] Error 2
-make: *** [Makefile:1210: dts] Error 2
-
 ```
 
 ### Compile Linux Kernel
@@ -197,15 +197,11 @@ Linux. You will see, that cross-compiling your own kernel is easier than you
 might thought, since we will just use the default configuration. If you wish,
 you can adjust the configuration to your needs before compilation.
 
-```
-> make xilinx_zynq_defconfig
-```
-
 Additionally, Linux needs a device tree describing the underlying hardware and
 including the kernel parameters passed during the boot. You need to adjust the
 default device tree shipped with the kernel to fit our configuration.
-The file for the Zedboard can be found in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-
-zed.dts` and the following diff shows the necessary changes.
+The file for the Zedboard can be found in `$WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dts`
+and the following diff shows the necessary changes.
 
 The `bootargs` setting includes the kernel parameters passed during boot. We
 specify the correct console and mount the root filesystem via NFS. Of course,
@@ -269,13 +265,10 @@ Now you can compile Linux by the following make command. This might take a
 while, so grab a coffee and cross your fingers.
 
 ```
+> cd $WD/linux-xlnx
 > make -j3 uImage LOADADDR=0x00008000
 > make dtbs
 ```
-
-Remember, that we got an error message when compiling U-Boot before? Now,
-after we have compiled the kernel, we can simply execute `make` again and
-should not get any further errors.
 
 ### Build the root filesystem
 
@@ -290,8 +283,9 @@ the root filesystem.
 
 ```
 > cd $WD/busybox
-> make allnoconfig
-> make menuconfig
+> make defconfig
+> sed -i "s|.*CONFIG_STATIC.*|CONFIG_STATIC=y|" ${WD}/busybox/.config
+> make menuconfig # optional
 > make -j3
 > make install
 > cp -r _install/* $WD/nfs
@@ -339,12 +333,16 @@ export for it by adding the following line to your `/etc/exports` file.
 Replace `<<path>>`, `<<boardip>>`, `<<uid>>` and `<<gid>>` by the appropriate values.
 
 ```
-<<path> <<boardip>>(rw,subtree_check,all_squash,anonuid=<<uid>>,anongid=<<gid>>)
+<<path> <<boardip>>(rw,no_subtree_check,fsid=root,anonuid=<<uid>>,anongid=<<gid>>)
 ```
 
 Of course, you need to make sure to configure both the board and your
 workstation properly to allow communication via network. This includes the
-right ip addresses and a physical connection.
+right ip addresses and a physical connection. Export the NFS share:
+
+```
+> exportfs -ar
+```
 
 ### Compile ReconOS kernel module
 
@@ -443,3 +441,36 @@ zynq> ./reconos_init.sh
 zynq> ./sortdemo
 zynq> ./sortdemo 2 1 16
 ```
+
+### Optional: Mount filesystem from ramdisk image instead of NFS share
+
+Although convenient during development, having the root filesystem mounted from NFS
+is not always the best option. The Zedboard needs to be connected with a host PC at
+all times in order to work. A different approach is to package the root filesystem
+in a ramdisk image and mount that image from SD card. This section describes, how to
+create and edit this image and how to setup U-Boot in order to start Linux with this approach.
+
+First create an empty image file and mount it.
+
+```
+cd $WD/ramdisk
+dd if=/dev/zero of=ramdisk.image bs=1024 count=8192
+mke2fs -F ramdisk.image -L "ramdisk" -b 1024 -m 0
+tune2fs ramdisk.image -i 0
+chmod a+rwx ramdisk.image
+mkdir $WD/ramdisk/mnt/
+sudo mount -o loop ramdisk.image $WD/ramdisk/mnt/
+```
+
+Then copy busybox, init files, ReconOS kernel modules and create the image file in the correct
+format.
+
+```
+sudo cp $WD/nfs/* $WD/ramdisk/mnt/
+sudo umount $WD/ramdisk/mnt/
+gzip $WD/ramdisk/ramdisk.image
+mkimage -A arm -T ramdisk -C gzip -d $WD/ramdisk/ramdisk.image.gz $WD/ramdisk/uramdisk.image.gz
+```
+
+Revert the patch for zynq-common.h and compile U-Boot again. Copy u-boot.img, boot.bin and ramdisk.image.gz
+to SD card. Now the Zedboard starts without relying on an Ethernet connection to a host PC.
