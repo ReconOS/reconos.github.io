@@ -55,6 +55,9 @@ Furthermore, we need to download some external components as listed below.
 
 * Busybox: [git://git.busybox.net/busybox](git://git.busybox.net/busybox)
 
+If you get into trouble with the master branch for the Xilinx repositories,
+you can try to checkout the branch `xilinx-v2016.2`.
+
 ### Setup Working Directory
 
 At first you should clone all the repositories listed above and create a
