@@ -132,15 +132,13 @@ For the cross compiler you can also use a different one, for example the
 compilers shipped with the newer SDK versions under
 `/opt/Xilinx/SDK/xxxx.x/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-`.
 
-### Compile scripts
+### Compile Scripts
 
 As preparation for compilation of U-Boot we need to build a tool (i.e. dtc) shipped with the linux kernel sources.
 We will come back later to compile the kernel.
 ```
 > cd $WD/linux-xlnx
-> git checkout -b wb xilinx-v2016.2
 > make xilinx_zynq_defconfig
-> make prepare
 > make scripts
 ```
 
@@ -184,18 +182,17 @@ Finally, to configure and build U-Boot, execute the following commands.
 
 ```
 > cd $WD/u-boot-xlnx
-> git checkout -b wb xilinx-v2016.2
 > make zynq_zed_defconfig
 > make menuconfig #disable Falcom Mode here
-> make
+> make -j3
 ```
 
 ### Compile Linux Kernel
 
-After we have compiled U-Boot now, or at least most of it, we can proceed with
-Linux. You will see, that cross-compiling your own kernel is easier than you
-might thought, since we will just use the default configuration. If you wish,
-you can adjust the configuration to your needs before compilation.
+After we have compiled U-Boot, we can proceed with Linux. You will see, that
+cross-compiling your own kernel is easier than you might thought, since we will
+just use the default configuration. If you wish, you can adjust the
+configuration to your needs before compilation.
 
 Additionally, Linux needs a device tree describing the underlying hardware and
 including the kernel parameters passed during the boot. You need to adjust the
