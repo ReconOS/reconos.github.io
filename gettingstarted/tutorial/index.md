@@ -333,7 +333,7 @@ export for it by adding the following line to your `/etc/exports` file.
 Replace `<<path>>`, `<<boardip>>`, `<<uid>>` and `<<gid>>` by the appropriate values.
 
 ```
-<<path> <<boardip>>(rw,no_subtree_check,fsid=root,anonuid=<<uid>>,anongid=<<gid>>)
+<<path> <<boardip>>(rw,no_subtree_check,all_squash,anonuid=<<uid>>,anongid=<<gid>>)
 ```
 
 Of course, you need to make sure to configure both the board and your
