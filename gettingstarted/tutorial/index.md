@@ -368,8 +368,16 @@ file under `$WD/reconos/setting.sh`. After that, you can simply type `rdk` to
 start the development kit.
 
 ```
-> cd $WD/reconos
-> source tools/settings.sh
+> source $WD/reconos/tools/settings.sh
+```
+
+Since version 4.0 ReconOS supports exporting and building ReconOS projects with
+Xilinx ISE (XPS) and Vivado. To tell RDK what tool flow to use, edit the `[General]`
+section of the configuration file at `$WD/reconos/demos/sort_demo/build.cfg`.
+
+```
+TargetXil = xps,14.7        # For use with Xilinx ISE (XPS)
+TargetXil = vivado,2016.2   # For use with Vivado
 ```
 
 So let's take a look into the SortDemo project folder in
@@ -383,10 +391,8 @@ reveals a list of all available commands.
 
 ```
 > cd $WD/reconos/demos/sort_demo
-> rdk
-ReconOS Toolchain> export_hw
-ReconOS Toolchain> export_sw
-ReconOS Toolchain> exit
+> rdk export_sw
+> rdk export_hw
 ```
 
 Now, the RDK has created two new folders, `build.hw` and `build.sw`, which
@@ -398,28 +404,29 @@ library is used by the SortDemo to get precise benchmarking results.
 
 ```
 > export CROSS_COMPILE=/opt/Xilinx/SDK/2016.2/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
-> cd $WD/reconos/linux/tools/timer
-> make
+> make -C $WD/reconos/linux/tools/timer
 ```
 
-Now you can implement both projects using make and the Xilinx Platform Studio
-(XPS).
+Now you can implement both projects.
 
 ```
-> cd $WD/reconos/demos/sort_demo/build.sw
-> make PREFIX=$WD/nfs/opt/reconos install
-> cd $WD/reconos/demos/sort_demo/build.hw
-> xps -nw system
-xps> run bits
-xps> exit
+rdk build_sw
+rdk build_hw
 ```
+
 The bitstream generation will take a while, so it might be the right time to
 get a coffee.
 
 ### Running the Demo
 
 Now you have everything you need to run the SortDemo on real hardware. At
-first, setup the SD card shipped with the board. The only thing you have to
+first, copy the compiled software executable to the root filesystem.
+
+```
+> cp $WD/reconos/demos/sort_demo/build.sw/sortdemo $WD/nfs/opt/reconos
+```
+
+Then setup the SD card shipped with the board. The only thing you have to
 do, is to cleanup the card and copy the right files to it.
 
 ```
@@ -427,19 +434,37 @@ do, is to cleanup the card and copy the right files to it.
 > cp $WD/u-boot-xlnx/u-boot.img /mnt/u-boot.img
 > cp $WD/linux-xlnx/arch/arm/boot/uImage /mnt/uImage
 > cp $WD/linux-xlnx/arch/arm/boot/dts/zynq-zed.dtb /mnt/devicetree.dtb
+```
+
+Also copy the implemented bitstream to SD card, for `TargetXil = xps,14.7`
+
+```
 > cp $WD/reconos/demos/sort_demo/build.hw/implementation/system.bin /mnt/fpga.bin
+```
+
+... or for `TargetXil = vivado,2016.2`
+
+```
+> cp $WD/reconos/demos/sort_demo/build.hw/myReconOS.runs/impl_1/design_1_wrapper.bit /mnt/
+
 ```
 
 After that, insert the SD card into the Zedboard and configure the bootmode by
 setting jumpers MI02, MI03 and MI06 to GND and MI04 and MI05 to 3V3. Turn on
-the board, connect via UART and see how Linux boots. When a command prompt
-appears, start the SortDemo and have fun.
+the board, connect via UART and see how Linux boots. When the u-boot command prompt
+appears, boot the Linux kernel with.
 
 ```
-zynq> cd /opt/reconos
-zynq> ./reconos_init.sh
-zynq> ./sortdemo
-zynq> ./sortdemo 2 1 16
+Zynq> boot
+```
+
+After Linux has booted, you can run the SortDemo.
+
+```
+/ # cd /opt/reconos
+/opt/reconos # ./reconos_init.sh
+/opt/reconos # ./sortdemo
+/opt/reconos # ./sortdemo 2 1 16
 ```
 
 ### Optional: Mount filesystem from ramdisk image instead of NFS share
