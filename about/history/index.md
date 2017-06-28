@@ -5,7 +5,7 @@ layout: page
 # History
 
 ReconOS has been actively developed since its inception in 2006.
-Since then it has gone through three major revisions and has
+Since then it has gone through four major revisions and has
 been ported to several operating systems and hardware platforms.
 
 ![Major Revisions of ReconOS]({{ site.url }}/assets/images/timeline.svg)
@@ -33,3 +33,12 @@ and modular design. It brings ReconOS to the Microblaze/Linux and
 Microblaze/Xilkernel architectures and has been used extensively
 on Virtex-6 FPGAs. ReconOS v3.1 switches from the old PLB-Bus to
 a new AXI based architecture and supports the Xilinx Zynq platform.
+
+## Version 4
+
+ReconOS v4.0, which was released in June 2017, allows the usage of 
+the Xilinx Vivado toolflow. This is an important step as it allows 
+the usage of high-level synthesis (HLS) tools and newest Xilinx Series 7 
+and UltraScale(+) FPGAs. Additionaly, hardware threads can now have 
+individual and run-time configurable clock lines, enabling higher 
+performance. 

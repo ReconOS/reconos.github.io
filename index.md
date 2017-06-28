@@ -7,8 +7,8 @@ slider:
       Support for the Xilinx Zynq,
       ReconOS now officially supports the Xilinx Zynq Platform]
   - [ slider_version.jpg,
-      ReconOS v3.1 released,
-      ReconOS now utilizes the AXI-Bus in an improved architecture]
+      ReconOS v4.0 released,
+      ReconOS now supports the Xilinx Vivado Toolflow and flexible clocking of hardware threads]
   - [ slider_reconf.jpg,
       Dynamically Reconfigurable Hardware Threads,
       ReconOS allows to dynamically reconfigure your hardware threads utilizing the partial reconfiguration features of the FPGA]
