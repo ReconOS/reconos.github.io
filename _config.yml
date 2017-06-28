@@ -2,9 +2,7 @@ name: "ReconOS"
 description: "Operating System for Reconfigurable Computing"
 
 highlighter: pygments
-markdown: redcarpet
-redcarpet:
-  extensions: ["fenced_code_blocks", "tables", "with_toc_data"]
+markdown: kramdown
 
 gems:
   - jekyll-sitemap
