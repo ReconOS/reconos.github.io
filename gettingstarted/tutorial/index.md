@@ -2,7 +2,23 @@
 title: Step By Step Guide for the Zynq
 layout: page
 ---
-# Step By Step Guide for the Zynq
+
+# install.sh : The Easy Start (Recommended)
+Starting with ReconOS v4, we offer an easy to use install script, which sets 
+up most of a ReconOS development environment for you. It should work under most Linux distributions. 
+All you have to do is download the shell script, make it executable and start it. The script will 
+ask you for relevant information, check if required software tools are installed, 
+clone the required software repositories and setup some configuration variables.
+
+To get started execute these commands:
+
+```
+> wget https://raw.githubusercontent.com/ReconOS/reconos/v4.0/tools/install.sh
+> chmod +x install.sh
+> ./install.sh
+```
+
+# Step By Step Guide for the Zynq (Alternative and Reference)
 To get started using ReconOS, this guide leads you through the first steps to
 setup your development environment. You will build the sort demo and execute
 it on your board by following the step by step instructions given. The
