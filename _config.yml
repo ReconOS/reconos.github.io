@@ -1,7 +1,7 @@
 name: "ReconOS"
 description: "Operating System for Reconfigurable Computing"
 
-highlighter: pygments
+highlighter: rouge
 markdown: kramdown
 
 gems:
