@@ -11,6 +11,7 @@ Assigns signals to the OSIF record. This function must be called
 asynchronously in the main entity including the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                                | Description                                                                 |
 |-----------------|-----------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `out i_osif_t`                                      | `i_osif_t` record                                                           |
