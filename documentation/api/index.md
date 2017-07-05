@@ -55,6 +55,7 @@ Resets the OSIF signals to a default state. This function should be called
 on reset of the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `o_osif`        | `out o_osif_t`                                    | `o_osif_t` record                                                           |
@@ -73,6 +74,7 @@ Assigns signals to the MEMIF record. This function must be called
 asynchronously in the main entity including the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_memif`       | `out i_memif_t`                                   | `i_memif_t` record                                                          |
@@ -115,6 +117,7 @@ Resets the MEMIF signals to a default state. This function should be called
 on reset of the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `o_memif`       | `out o_memif_t`                                   | `o_memif_t` record                                                          |
@@ -133,6 +136,7 @@ Assigns signals to the ram record. This function must be called
 asynchronously in the main entity including the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_ram`         | `out i_ram_t`                                     | `i_ram_t` record                                                            |
@@ -193,6 +197,7 @@ Resets the RAM signals to a default state. This function should be called
 on reset of the OS-FSM.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `o_ram`         | `out o_ram_t`                                     | `o_ram_t` record                                                            |
@@ -210,6 +215,7 @@ end if;
 Reads a single word from the OSIF.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -224,6 +230,7 @@ Reads a single word from the OSIF.
 Writes a single word into the OSIF.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -240,6 +247,7 @@ and might result in an preemption of the hardware thread. This method alone
 does not issue any call but only sets the yield bit for a regular system call.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -263,6 +271,7 @@ when STATE_CURRENT =>
 Posts the semaphore specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -289,6 +298,7 @@ when STATE_CURRENT =>
 Waits for the semaphore specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -315,6 +325,7 @@ when STATE_CURRENT =>
 Locks the mutex specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -341,6 +352,7 @@ when STATE_CURRENT =>
 Unlocks the mutex specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -367,6 +379,7 @@ when STATE_CURRENT =>
 Tries to lock the mutex specified by handle and returns if successful or not.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -399,6 +412,7 @@ Waits for the condition variable specified by handle. You must
 have locked the mutex before calling this function.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -426,6 +440,7 @@ when STATE_CURRENT =>
 Signals a single thread waiting on the condition variable specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -452,6 +467,7 @@ when STATE_CURRENT =>
 Signals all threads waiting on the condition variable specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -478,6 +494,7 @@ when STATE_CURRENT =>
 Puts a single word into the mbox specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -505,6 +522,7 @@ when STATE_CURRENT =>
 Reads a single word from the mbox specified by handle.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -532,6 +550,7 @@ Tries to put a single word into the mbox specified by handle but does not
 blocks until the mbox gets populated.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -565,6 +584,7 @@ Tries to put a single word into the mbox specified by handle but does not
 blocks until the mbox gets populated.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -598,6 +618,7 @@ Gets the pointer to the initialization data of the hardware thread
 specified by reconos_hwt_setinitdata.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -623,6 +644,7 @@ when STATE_CURRENT =>
 Terminates the current hardware thread and the delegate in software.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_osif`        | `in i_osif_t`                                     | `i_osif_t` record                                                           |
@@ -646,6 +668,7 @@ checks the words in the MEMIF-FIFOs but does not guarantee that even the last
 word was written into the memory.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_memif`       | `in i_memif_t`                                    | `i_memif_t` record                                                          |
@@ -671,6 +694,7 @@ Writes a single word into the main memory. Be aware, that the address must
 be word aligned
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_memif`       | `in i_memif_t`                                    | `i_memif_t` record                                                          |
@@ -698,6 +722,7 @@ Reads a single word from the main memory. Be aware, that the address must
 be word aligned
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_memif`       | `in i_memif_t`                                    | `i_memif_t` record                                                          |
@@ -725,6 +750,7 @@ Writes several words from the local ram into the main memory. Be aware,
 that the address must be word aligned and you can only write entire words.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_ram`         | `in i_ram_t`                                      | `i_ram_t` record                                                            |
@@ -755,6 +781,7 @@ Reads several words from the main memory into the local ram. Be aware,
 that the address must be word aligned and you can only write entire words.
 
 #### Parameters
+
 | Name            | Type                                              | Description                                                                 |
 |-----------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `i_ram`         | `in i_ram_t`                                      | `i_ram_t` record                                                            |
@@ -803,6 +830,7 @@ SIGTERM and SIGABRT. Keep this in mind when overriding these handlers.
 Resets a single hardware thread slot.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `slot`              | `int`                                             | slot number to reset                                                        |
@@ -818,6 +846,7 @@ that the scheduler can be called concurrently multiple times and must
 be synchronized.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `scheduler`         | `struct reconos_configuration* (*scheduler)(struct reconos_hwt *hwt)` | pointer to the scheduler                                  |
@@ -836,6 +865,7 @@ needed on all architectures.
 Associates a resource array to this hardware thread.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `hwt`               | `struct reconos_hwt *`                            | pointer to the configuration structure                                      |
@@ -849,6 +879,7 @@ Associates a resource array to this hardware thread.
 Associates initialization data to this hardware thread.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `hwt`               | `struct reconos_hwt *`                            | pointer to the configuration structure                                      |
@@ -862,6 +893,7 @@ Creates a new hardware thread running in the a specific slot. Before
 executed the slot will be resetted.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `hwt`               | `struct reconos_hwt *`                            | pointer to the configuration structure                                      |
@@ -877,6 +909,7 @@ Before executed the slot is reconfigured with the appropriate bitstream
 and resetted.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `hwt`               | `struct reconos_hwt *`                            | pointer to the configuration structure                                      |
@@ -892,6 +925,7 @@ Initializes a new configuration with default values. This function must
 be called for every configuration you want to use.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `cfg`               | `struct reconos_configuration *`                  | pointer to the configuration structure                                      |
@@ -906,6 +940,7 @@ Associates a resource array to this configuration. This is the equivalent
 to reconos_set_resources for not reconfigurable hardware threads.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `cfg`               | `struct reconos_configuration *`                  | pointer to the configuration structure                                      |
@@ -920,6 +955,7 @@ Associates a bitstream to this configuration to program the FPGA
 on reconfiguration.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `cfg`               | `struct reconos_configuration *`                  | pointer to the configuration structure                                      |
@@ -934,6 +970,7 @@ Loads a bitstram from the filesystem and associates it to the configuration
 by calling reconos_configuration_setbitstream.
 
 #### Parameters
+
 | Name                | Type                                              | Description                                                                 |
 |---------------------|---------------------------------------------------|-----------------------------------------------------------------------------|
 | `cfg`               | `struct reconos_configuration *`                  | pointer to the configuration structure                                      |
