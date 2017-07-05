@@ -3,6 +3,7 @@ description: "Operating System for Reconfigurable Computing"
 
 highlighter: rouge
 markdown: kramdown
+  input: GFM
 
 gems:
   - jekyll-sitemap
