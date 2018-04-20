@@ -13,10 +13,12 @@
 
 /gettingstarted:
   - [/gettingstarted/tutorial, Tutorial]
+  - [/gettingstarted/dynamic_reconfiguration, Dynamic Reconfiguration]
   - [/gettingstarted/demos, Demo Builds]
 #  - [/gettingstarted/samplecode, Sample Code]
   - [/gettingstarted/github, Github Repository, "https://github.com/ReconOS/reconos", y]
   - [/gettingstarted/resources, Resources]
+
 
 /documentation:
   - [/documentation/userguide, User Guide]
