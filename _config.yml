@@ -1,5 +1,8 @@
 name: "ReconOS"
+title: "ReconOS"
 description: "Operating System for Reconfigurable Computing"
+url: "https://reconos.de"
+baseurl: ""
 
 highlighter: rouge
 markdown: kramdown

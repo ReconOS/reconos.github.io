@@ -106,7 +106,7 @@
 }
 
 #slider #slider-content .caption h2 {
-	font-family:Roboto Condensed;
+	font-family: "Roboto Condensed", Arial, sans-serif;
 	font-size:15px;
 	font-weight:300;
 	text-shadow: 0px 1px 1px rgba(230, 230, 230, 0.9);
